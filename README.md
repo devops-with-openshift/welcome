@@ -16,7 +16,7 @@
 
 **Tag the image**
 
-    docker tag welcome docker.io/eformat/welcome
+    docker tag -f welcome docker.io/eformat/welcome
 
 **Push the image**
 
