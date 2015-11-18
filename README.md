@@ -15,7 +15,13 @@
     Login Succeeded
 
 **Tag the image**
+
     docker tag welcome docker.io/eformat/welcome
 
 **Push the image**
+
     docker push eformat/welcome
+
+**Pull the image**
+
+    docker pull eformat/welcome
