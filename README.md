@@ -10,7 +10,7 @@
     virt:~/git/welcome/sh$ docker login 
     Username: eformat
     Password: 
-    Email: mike@eformat.co.nz
+    Email:
     WARNING: login credentials saved in /home/mike/.docker/config.json
     Login Succeeded
 
