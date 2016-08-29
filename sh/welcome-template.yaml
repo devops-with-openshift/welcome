@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: welcome_template
+objects:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: welcome
+    name: welcome
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: welcome
+      deploymentconfig: welcome
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    annotations:
+      openshift.io/host.generated: "true"
+    creationTimestamp: null
+    labels:
+      app: welcome
+    name: welcome
+  spec:
+    host: welcome-welcome.apps.eformat.nz
+    port:
+      targetPort: 8080-tcp
+    to:
+      kind: Service
+      name: welcome
+  status:
+    ingress:
+    - conditions:
+      - lastTransitionTime: 2016-08-29T22:35:49Z
+        status: "True"
+        type: Admitted
+      host: welcome-welcome.apps.eformat.nz
+      routerName: router
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+      openshift.io/image.dockerRepositoryCheck: 2016-08-29T22:35:50Z
+    creationTimestamp: null
+    generation: 2
+    labels:
+      app: welcome
+    name: welcome
+  spec:
+    tags:
+    - annotations:
+        openshift.io/imported-from: eformat/welcome
+      from:
+        kind: DockerImage
+        name: docker.io/eformat/welcome:latest
+      generation: 2
+      importPolicy: {}
+      name: latest
+  status:
+    dockerImageRepository: ""     
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: welcome
+    name: welcome
+  spec:
+    replicas: 1
+    selector:
+      app: welcome
+      deploymentconfig: welcome
+    strategy:
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        annotations:
+          openshift.io/container.welcome.image.entrypoint: '["./hello.sh"]'
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: welcome
+          deploymentconfig: welcome
+      spec:
+        containers:
+        - image: eformat/welcome:latest
+          imagePullPolicy: Always
+          name: welcome
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+    - type: ImageChange      
+      imageChangeParams:
+        automatic: true
+        containerNames:
+        - welcome
+        from:
+          kind: ImageStreamTag
+          name: welcome:latest
+  status: {}
