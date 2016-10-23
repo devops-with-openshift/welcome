@@ -1,3 +1,2 @@
-FROM welcome/welcome:latest
-ADD ./hello-foo.sh ./
-CMD ["./hello-foo.sh"]
+FROM welcome/ops:latest
+CMD ["./hello.sh", "foo"]
