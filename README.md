@@ -8,20 +8,20 @@
 **Login to docker hub**
 
     virt:~/git/welcome/sh$ docker login 
-    Username: eformat
+    Username: devops-with-openshift
     Password: 
     Email:
-    WARNING: login credentials saved in /home/mike/.docker/config.json
+    WARNING: login credentials saved in /home/devops-with-openshift/.docker/config.json
     Login Succeeded
 
 **Tag the image**
 
-    docker tag -f welcome docker.io/eformat/welcome
+    docker tag -f welcome docker.io/devops-with-openshift/welcome
 
 **Push the image**
 
-    docker push eformat/welcome
+    docker push devops-with-openshift/welcome
 
 **Pull the image**
 
-    docker pull eformat/welcome
+    docker pull devops-with-openshift/welcome
