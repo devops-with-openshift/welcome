@@ -3,7 +3,7 @@
 **Build the image**
 
     docker build -t welcome .
-    docker run -it welcome /bin/sh
+    docker run --name welcome -d -p 8080:8080 welcome
 
 **Login to docker hub**
 
